@@ -1,7 +1,31 @@
 package org.mirza.springrestdocker.service;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.mirza.springrestdocker.dto.PostDto;
+import org.mirza.springrestdocker.entity.Post;
+import org.mirza.springrestdocker.repository.PostRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class PostService {
+    private final PostRepository postRepository;
+    private final ModelMapper modelMapper;
+
+    public List<PostDto> getAllPosts() {
+        List<Post> posts = postRepository.findAll();
+        List<PostDto> postDtoList = new ArrayList<>();
+        for (Post post : posts) {
+            PostDto postDto = new PostDto();
+            postDto = modelMapper.map(post, PostDto.class);
+            postDtoList.add(postDto);
+        }
+        return postDtoList;
+    }
 }
