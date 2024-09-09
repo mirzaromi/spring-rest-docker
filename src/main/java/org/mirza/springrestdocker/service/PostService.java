@@ -1,5 +1,6 @@
 package org.mirza.springrestdocker.service;
 
+import exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mirza.springrestdocker.dto.PostDto;
@@ -27,5 +28,9 @@ public class PostService {
             postDtoList.add(postDto);
         }
         return postDtoList;
+    }
+
+    public PostDto getPostById(Long id) {
+        Post post = postRepository.findById(id).orElseThrow(() -> new NotFoundException("Post Not Found"));
     }
 }
