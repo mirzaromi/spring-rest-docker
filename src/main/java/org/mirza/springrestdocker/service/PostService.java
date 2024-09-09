@@ -1,5 +1,6 @@
 package org.mirza.springrestdocker.service;
 
+import enums.ResponseCode;
 import exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,7 @@ public class PostService {
     }
 
     public PostDto getPostById(Long id) {
-        Post post = postRepository.findById(id).orElseThrow(() -> new NotFoundException("Post Not Found"));
+        Post post = postRepository.findById(id).orElseThrow(() -> new NotFoundException(ResponseCode.POST_NOT_FOUND));
+        return modelMapper.map(post, PostDto.class);
     }
 }

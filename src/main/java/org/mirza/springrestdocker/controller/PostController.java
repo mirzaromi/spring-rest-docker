@@ -20,15 +20,17 @@ public class PostController {
     @GetMapping
     @Description("get all post")
     public ResponseEntity<BaseResponse<List<PostDto>>> getPost() {
-        List<PostDto> response = postService.getAllPosts();
-        BaseResponse<List<PostDto>> baseResponse = new BaseResponse<>(HttpStatus.OK.getReasonPhrase(), "success get data", response);
+        List<PostDto> postlist = postService.getAllPosts();
+        BaseResponse<List<PostDto>> baseResponse = new BaseResponse<>(HttpStatus.OK.getReasonPhrase(), "success get data", postlist);
         return ResponseEntity.ok(baseResponse);
     }
 
     @GetMapping("/{id}")
     @Description("get post by id")
-    public ResponseEntity<String> getPostById(@RequestParam Long id) {
-        return ResponseEntity.ok("Hello World");
+    public ResponseEntity<BaseResponse<PostDto>> getPostById(@PathVariable Long id) {
+        PostDto post = postService.getPostById(id);
+        BaseResponse<PostDto> response = new BaseResponse<>(HttpStatus.OK.getReasonPhrase(), "success get data", post);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping
