@@ -1,4 +1,4 @@
-package enums;
+package org.mirza.springrestdocker.enums;
 
 public enum ResponseCode {
 

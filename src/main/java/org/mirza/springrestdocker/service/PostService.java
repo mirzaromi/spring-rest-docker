@@ -1,7 +1,7 @@
 package org.mirza.springrestdocker.service;
 
-import enums.ResponseCode;
-import exception.NotFoundException;
+import org.mirza.springrestdocker.enums.ResponseCode;
+import org.mirza.springrestdocker.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mirza.springrestdocker.dto.PostDto;

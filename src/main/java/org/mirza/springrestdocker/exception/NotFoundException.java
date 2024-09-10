@@ -1,6 +1,6 @@
-package exception;
+package org.mirza.springrestdocker.exception;
 
-import enums.ResponseCode;
+import org.mirza.springrestdocker.enums.ResponseCode;
 import lombok.Getter;
 
 @Getter
