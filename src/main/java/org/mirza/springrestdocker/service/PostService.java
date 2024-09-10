@@ -41,4 +41,12 @@ public class PostService {
         post = postRepository.save(post);
         return modelMapper.map(post, PostDto.class);
     }
+
+    public PostDto updatePost(Long id, PostDto postDto) {
+        Post post = postRepository.findById(id).orElseThrow(() -> new NotFoundException(ResponseCode.POST_NOT_FOUND));
+        post.setTitle(postDto.getTitle());
+        post.setBody(postDto.getBody());
+        post = postRepository.save(post);
+        return modelMapper.map(post, PostDto.class);
+    }
 }

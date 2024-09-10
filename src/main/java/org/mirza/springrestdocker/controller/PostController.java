@@ -43,8 +43,10 @@ public class PostController {
 
     @PutMapping("/{id}")
     @Description("update post by id")
-    public ResponseEntity<String> updatePost(@RequestParam Long id, @RequestParam String body) {
-        return ResponseEntity.ok("Hello World");
+    public ResponseEntity<BaseResponse<PostDto>> updatePost(@PathVariable Long id, @RequestBody PostDto postDto) {
+        postService.updatePost(id, postDto);
+        BaseResponse<PostDto> response = new BaseResponse<>(HttpStatus.OK.getReasonPhrase(), "success update post", postDto);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
