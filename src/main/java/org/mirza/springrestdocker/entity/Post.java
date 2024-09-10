@@ -21,4 +21,7 @@ public class Post {
 
     @Column(nullable = false)
     private String body;
+
+    @Column(nullable = false)
+    private boolean isDeleted = false;
 }

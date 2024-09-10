@@ -21,18 +21,18 @@ public class PostService {
     private final ModelMapper modelMapper;
 
     public List<PostDto> getAllPosts() {
-        List<Post> posts = postRepository.findAll();
+        List<Post> posts = postRepository.findAllByIsDeletedFalse();
         List<PostDto> postDtoList = new ArrayList<>();
         for (Post post : posts) {
-            PostDto postDto = new PostDto();
-            postDto = modelMapper.map(post, PostDto.class);
+            PostDto postDto = modelMapper.map(post, PostDto.class);
             postDtoList.add(postDto);
         }
         return postDtoList;
     }
 
     public PostDto getPostById(Long id) {
-        Post post = postRepository.findById(id).orElseThrow(() -> new NotFoundException(ResponseCode.POST_NOT_FOUND));
+        Post post = postRepository.findPostByIdAndIsDeletedFalse(id)
+                .orElseThrow(() -> new NotFoundException(ResponseCode.POST_NOT_FOUND));
         return modelMapper.map(post, PostDto.class);
     }
 
@@ -43,10 +43,17 @@ public class PostService {
     }
 
     public PostDto updatePost(Long id, PostDto postDto) {
-        Post post = postRepository.findById(id).orElseThrow(() -> new NotFoundException(ResponseCode.POST_NOT_FOUND));
+        Post post = postRepository.findPostByIdAndIsDeletedFalse(id).orElseThrow(() -> new NotFoundException(ResponseCode.POST_NOT_FOUND));
         post.setTitle(postDto.getTitle());
         post.setBody(postDto.getBody());
         post = postRepository.save(post);
+        return modelMapper.map(post, PostDto.class);
+    }
+
+    public PostDto deletePost(Long id) {
+        Post post = postRepository.findPostByIdAndIsDeletedFalse(id).orElseThrow(() -> new NotFoundException(ResponseCode.POST_NOT_FOUND));
+        post.setDeleted(true);
+        postRepository.save(post);
         return modelMapper.map(post, PostDto.class);
     }
 }

@@ -51,7 +51,9 @@ public class PostController {
 
     @DeleteMapping("/{id}")
     @Description("delete post by id")
-    public ResponseEntity<String> deletePost(@RequestParam Long id) {
-        return ResponseEntity.ok("Hello World");
+    public ResponseEntity<BaseResponse<PostDto>> deletePost(@PathVariable Long id) {
+        PostDto postDto = postService.deletePost(id);
+        BaseResponse<PostDto> response = new BaseResponse<>(HttpStatus.OK.getReasonPhrase(), "success delete post", postDto);
+        return ResponseEntity.ok(response);
     }
 }
