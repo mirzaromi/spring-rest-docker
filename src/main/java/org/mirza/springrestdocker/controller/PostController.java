@@ -35,8 +35,10 @@ public class PostController {
 
     @PostMapping
     @Description("create new post")
-    public ResponseEntity<String> createPost() {
-        return ResponseEntity.ok("Hello World");
+    public ResponseEntity<BaseResponse<PostDto>> createPost(@RequestBody PostDto postDto) {
+        PostDto post = postService.createPost(postDto);
+        BaseResponse<PostDto> response = new BaseResponse<>(HttpStatus.CREATED.getReasonPhrase(), "success create post", post);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{id}")

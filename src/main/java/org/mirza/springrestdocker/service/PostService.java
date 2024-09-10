@@ -35,4 +35,10 @@ public class PostService {
         Post post = postRepository.findById(id).orElseThrow(() -> new NotFoundException(ResponseCode.POST_NOT_FOUND));
         return modelMapper.map(post, PostDto.class);
     }
+
+    public PostDto createPost(PostDto postDto) {
+        Post post = modelMapper.map(postDto, Post.class);
+        post = postRepository.save(post);
+        return modelMapper.map(post, PostDto.class);
+    }
 }
