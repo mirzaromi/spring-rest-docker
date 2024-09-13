@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  app:
+    image: spring-rest-docker  # Replace with your Spring Boot image name
+    container_name: spring-rest-docker
+    build: .
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/spring_rest_docker
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    depends_on:
+      - db
+    networks:
+      - springboot-network
+
+  db:
+    image: postgres:12.12
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: spring_rest_docker
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - springboot-network
+
+networks:
+  springboot-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
